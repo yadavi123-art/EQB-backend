@@ -1,0 +1,155 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const userSchema = new mongoose.Schema({
+  user_id: { type: String, required: true, unique: true },
+  Name: { type: String, required: true },
+  Email: { type: String, required: true, unique: true },
+  phone_no: { type: String, required: true },
+  password: { type: String, required: true },
+  review_count: { type: Number, default: 0 }
+});
+
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    return next(err);
+  }
+});
+
+module.exports = mongoose.model('User', userSchema);
+
+const venueOwnerSchema = new mongoose.Schema({
+  Owner_id: { type: String, required: true, unique: true },
+  Name: { type: String, required: true },
+  Email: { type: String, required: true, unique: true },
+  Phone_no: { type: String, required: true },
+  password: { type: String, required: true }
+});
+
+module.exports = mongoose.model('VenueOwner', venueOwnerSchema);
+
+const venueSchema = new mongoose.Schema({
+  hall_id: { type: String, required: true, unique: true },
+  hall_type: { type: String, required: true },
+  priceperday: { type: Number, required: true },
+  availabilty_status: { type: Boolean, required: true },
+  hall_amenities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'HallAmenity' }],
+});
+
+module.exports = mongoose.model('Venue', venueSchema);
+
+const adminSchema = new mongoose.Schema({
+  admin_id: { type: String, required: true, unique: true },
+  Name: { type: String, required: true },
+  Password: { type: String, required: true },
+  Email: { type: String, required: true, unique: true }
+});
+
+module.exports = mongoose.model('Admin', adminSchema);
+
+const bookingSchema = new mongoose.Schema({
+  booking_id: { type: String, required: true, unique: true },
+  user_id: { type: String, required: true },
+  hall_id: { type: String, required: true },
+  booking_dates: { type: [Date], required: true },
+  status: { type: String, enum: ['booked', 'canceled'], required: true }
+});
+
+module.exports = mongoose.model('Booking', bookingSchema);
+
+const offerSchema = new mongoose.Schema({
+  hall_id: { type: String, required: true },
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  discount_percent: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('Offer', offerSchema);
+
+const hallAmenitySchema = new mongoose.Schema({
+  ameniti_id: { type: String, required: true, unique: true },
+  amenity_type: { type: String, required: true },
+  amenity_description: { type: String, required: true },
+  amenity_qnt: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('HallAmenity', hallAmenitySchema);
+
+const paymentSchema = new mongoose.Schema({
+  payment_id: { type: String, required: true, unique: true },
+  booking_id: { type: String, required: true },
+  user_id: { type: String, required: true },
+  amount: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('Payment', paymentSchema);
+
+
+const customerSupportSchema = new mongoose.Schema({
+  Name: { type: String, required: true },
+  Email: { type: String, required: true },
+  Msg: { type: String, required: true }
+});
+
+module.exports = mongoose.model('CustomerSupport', customerSupportSchema);
+
+const wishlistSchema = new mongoose.Schema({
+  wishlist_id: { type: String, required: true, unique: true },
+  user_id: { type: String, required: true },
+  venue_id: { type: String, required: true },
+  image: { type: String, required: true },
+  venueName: { type: String, required: true },
+  ratings: { type: Number, required: true },
+  location: { type: String, required: true }
+});
+
+module.exports = mongoose.model('Wishlist', wishlistSchema);
+
+const reviewSchema = new mongoose.Schema({
+  hall_id: { type: String, required: true },
+  average_rating: { type: Number, required: true },
+  review_count: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('Review', reviewSchema);
+
+const historySchema = new mongoose.Schema({
+  user_id: { type: String, required: true },
+  venue_id: { type: String, required: true },
+  booking_date: { type: Date, required: true },
+  booking_time: { type: String, required: true },
+  status: { type: String, required: true },
+  total_amount: { type: Number, required: true },
+  payment_status: { type: String, required: true },
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.model('History', historySchema);
+
+const HomepageContentSchema = new mongoose.Schema({
+  image: String,
+  venueName: String,
+  ratings: Number,
+  location: String
+});
+
+module.exports = mongoose.model('HomepageContent', HomepageContentSchema);
+
+const OfferSectionSchema = new mongoose.Schema({
+  image: { type: String, required: true },
+  venueName: { type: String, required: true },
+  ratings: { type: Number, required: true },
+  discount: { type: Number, required: true },
+  location: { type: String, required: true }
+});
+
+module.exports = mongoose.model('OfferSection', OfferSectionSchema);
