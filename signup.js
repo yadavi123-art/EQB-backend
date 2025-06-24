@@ -55,7 +55,7 @@ const { v4: uuidv4 } = require('uuid');
  *                   type: string
  *                   description: An error message.
  */
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const { Name, Email, phone_no, password } = req.body;
     const user_id = uuidv4();
