@@ -15,6 +15,8 @@ const homepageRoute = require('./homepage.js');
 const offerRoute = require('./offer.js');
 const wishlistRoute = require('./wishlist.js');
 
+
+
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
 
