@@ -9,7 +9,7 @@ const options = {
       description: 'API documentation for the Booking application',
     },
   },
-  apis: ['./app.js', './signup.js', './login.js', './homepage.js', './offer.js', './wishlist.js'], // Path to the API routes
+  apis: ['./app.js', './signup.js', './login.js', './homepage.js', './offer.js', './wishlist.js', './hall.swagger.js'], // Path to the API routes
 };
 
 const specs = swaggerJsdoc(options);

@@ -27,6 +27,9 @@ app.use('/homepage', homepageRoute);
 app.use('/offers', offerRoute);
 app.use('/wishlist', wishlistRoute);
 
+const hallRoute = require('./hall.js');
+app.use('/halls', hallRoute);
+
 // New route for popular venues
 /**
  * @swagger

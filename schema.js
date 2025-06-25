@@ -41,7 +41,12 @@ const venueSchema = new mongoose.Schema({
   hall_type: { type: String, required: true },
   priceperday: { type: Number, required: true },
   availabilty_status: { type: Boolean, required: true },
-  hall_amenities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'HallAmenity' }],
+  hall_amenities: [{ 
+    ameniti_id: { type: String, required: true, unique: true },
+    amenity_type: { type: String, required: true },
+   amenity_description: { type: String, required: true },
+   amenity_qnt: { type: Number, required: true }
+   }],
 });
 
 module.exports = mongoose.model('Venue', venueSchema);
@@ -74,14 +79,7 @@ const offerSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('Offer', offerSchema);
 
-const hallAmenitySchema = new mongoose.Schema({
-  ameniti_id: { type: String, required: true, unique: true },
-  amenity_type: { type: String, required: true },
-  amenity_description: { type: String, required: true },
-  amenity_qnt: { type: Number, required: true }
-});
 
-module.exports = mongoose.model('HallAmenity', hallAmenitySchema);
 
 const paymentSchema = new mongoose.Schema({
   payment_id: { type: String, required: true, unique: true },
