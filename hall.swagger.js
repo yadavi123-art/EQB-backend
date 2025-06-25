@@ -120,6 +120,18 @@
  *           items:
  *             $ref: '#/components/schemas/Amenity'
  *           description: The hall amenities.
+ *         images:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               url:
+ *                 type: string
+ *                 description: The URL of the image.
+ *               caption:
+ *                 type: string
+ *                 description: The caption of the image.
+ *           description: The images of the hall.
  *       required:
  *         - hall_id
  *         - hall_type

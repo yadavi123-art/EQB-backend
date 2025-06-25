@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
       hall_type: req.body.hall_type,
       priceperday: req.body.priceperday,
       availabilty_status: req.body.availabilty_status,
-      hall_amenities: req.body.hall_amenities
+      hall_amenities: req.body.hall_amenities,
+      images: req.body.images
     });
     const hall = await newHall.save();
     res.json(hall);

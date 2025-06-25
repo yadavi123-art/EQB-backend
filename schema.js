@@ -47,6 +47,10 @@ const venueSchema = new mongoose.Schema({
    amenity_description: { type: String, required: true },
    amenity_qnt: { type: Number, required: true }
    }],
+  images: [{
+    url: { type: String },
+    caption: { type: String }
+  }]
 });
 
 module.exports = mongoose.model('Venue', venueSchema);
