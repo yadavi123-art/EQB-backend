@@ -57,12 +57,12 @@ const bcrypt = require('bcrypt');
  *                   type: string
  *                   description: An error message.
  */
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { Email, password } = req.body;
 
     // Find user by email
-    const user = await User.findOne({ Email });
+    const user = await User.findOne({Email });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -70,7 +70,8 @@ router.post('/', async (req, res) => {
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
-
+   
+   console.log("Password match result:", isMatch);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }

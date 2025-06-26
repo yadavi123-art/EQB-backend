@@ -132,6 +132,12 @@
  *                 type: string
  *                 description: The caption of the image.
  *           description: The images of the hall.
+ *         averageRating:
+ *           type: number
+ *           description: The average rating of the hall.
+ *         individualRatings:
+ *           type: object
+ *           description: The individual ratings of the hall.
  *       required:
  *         - hall_id
  *         - hall_type

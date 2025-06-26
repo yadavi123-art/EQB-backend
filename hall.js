@@ -38,7 +38,9 @@ router.post('/', async (req, res) => {
       priceperday: req.body.priceperday,
       availabilty_status: req.body.availabilty_status,
       hall_amenities: req.body.hall_amenities,
-      images: req.body.images
+      images: req.body.images,
+      averageRating: req.body.averageRating,
+      individualRatings: req.body.individualRatings
     });
     const hall = await newHall.save();
     res.json(hall);
@@ -55,7 +57,12 @@ router.put('/:id', async (req, res) => {
     if (!hall) {
       return res.status(404).json({ msg: 'Hall not found' });
     }
-    res.json(hall);
+    
+    hall.averageRating = req.body.averageRating || hall.averageRating;
+    hall.individualRatings = req.body.individualRatings || hall.individualRatings;
+
+    const updatedHall = await hall.save();
+    res.json(updatedHall);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');

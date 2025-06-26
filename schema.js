@@ -50,7 +50,21 @@ const venueSchema = new mongoose.Schema({
   images: [{
     url: { type: String },
     caption: { type: String }
-  }]
+  }],
+  averageRating: {
+    type: Number,
+    default: 0
+  },
+  individualRatings: {
+    type: Object,
+    default: {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    }
+  }
 });
 
 module.exports = mongoose.model('Venue', venueSchema);
@@ -115,13 +129,35 @@ const wishlistSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('Wishlist', wishlistSchema);
 
-const reviewSchema = new mongoose.Schema({
-  hall_id: { type: String, required: true },
-  average_rating: { type: Number, required: true },
-  review_count: { type: Number, required: true }
+const ratingSchema = new mongoose.Schema({
+  hall_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Hall',
+    required: true
+  },
+  user_phone: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  review: {
+    type: String }
+  ,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-module.exports = mongoose.model('Review', reviewSchema);
+// Ek user (phone number) ek hall ko ek hi baar rate kare
+ratingSchema.index({ hall_id: 1, user_phone: 1 }, { unique: true });
+
+module.exports = mongoose.model('Rating', ratingSchema);
 
 const historySchema = new mongoose.Schema({
   user_id: { type: String, required: true },
