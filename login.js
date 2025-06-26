@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('./schema.js');
+const User = require('./schema.js').model("User");
 const bcrypt = require('bcrypt');
 
 /**
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 
     // Find user by email
     const user = await User.findOne({Email });
-
+    console.log("User",user,Email)
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
