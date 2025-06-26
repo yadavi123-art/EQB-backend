@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./schema.js');
+const User = require('./schema.js').model("User");
 const { v4: uuidv4 } = require('uuid');
 
 /**
