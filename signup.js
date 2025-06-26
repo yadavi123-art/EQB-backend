@@ -18,9 +18,6 @@ const { v4: uuidv4 } = require('uuid');
  *           schema:
  *             type: object
  *             properties:
- *               user_id:
- *                 type: string
- *                 description: The unique user ID.
  *               Name:
  *                 type: string
  *                 description: The name of the user.
