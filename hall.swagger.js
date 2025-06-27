@@ -103,9 +103,9 @@
  *     Hall:
  *       type: object
  *       properties:
- *         hall_id:
+ *         hall_name:
  *           type: string
- *           description: The hall ID.
+ *           description: The name of the hall.
  *         hall_type:
  *           type: string
  *           description: The type of hall.
@@ -139,7 +139,7 @@
  *           type: object
  *           description: The individual ratings of the hall.
  *       required:
- *         - hall_id
+ *         - hall_name
  *         - hall_type
  *         - priceperday
  *         - availabilty_status
