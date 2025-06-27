@@ -18,7 +18,7 @@ const Wishlist = require('./schema.js').model('Wishlist'); // Require the wishli
 // You can now use the Wishlist model to interact with the database
 const CustomerSupport = require('./schema.js').model('CustomerSupport'); // Require the customerSupport schema
 // You can now use the CustomerSupport model to interact with the database
-const Review = require('./schema.js').model('Review'); // Require the review schema
+const Rating = require('./schema.js').model('Rating'); // Require the rating schema
 // You can now use the Review model to interact with the database
 const History = require('./schema.js').model('History'); // Require the history schema
 // You can now use the History model to interact with the database

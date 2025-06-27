@@ -11,7 +11,7 @@ async function getPopularVenues() {
     const wishlistVenues = await Wishlist.find({ ratings: { $gt: 4 } });
     const homepageVenues = await HomepageContent.find({ ratings: { $gt: 4 } });
     const offerSectionVenues = await OfferSection.find({ ratings: { $gt: 4 } });
-    const reviewVenues = await Review.find({ average_rating: { $gt: 4 } });
+    const reviewVenues = await Rating.find({ average_rating: { $gt: 4 } });
 
     // Combine the results from all schemas
     let popularVenues = [...wishlistVenues, ...homepageVenues, ...offerSectionVenues, ...reviewVenues];
