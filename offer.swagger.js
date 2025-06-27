@@ -93,15 +93,17 @@
  *               items:
  *                 type: object
  *                 properties:
- *                   image:
+ *                   hall_id:
  *                     type: string
- *                     description: The URL of the venue image.
- *                   venueName:
+ *                     description: The ID of the venue.
+ *                   startDate:
  *                     type: string
- *                     description: The name of the venue.
- *                   location:
+ *                     format: date
+ *                     description: The start date of the offer.
+ *                   endDate:
  *                     type: string
- *                     description: The location of the venue.
+ *                     format: date
+ *                     description: The end date of the offer.
  *                   discount_percent:
  *                     type: number
  *                     description: The discount percentage of the offer.

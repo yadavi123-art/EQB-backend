@@ -89,11 +89,25 @@ const bookingSchema = new mongoose.Schema({
 module.exports = mongoose.model('Booking', bookingSchema);
 
 const offerSchema = new mongoose.Schema({
-  hall_id: { type: String, required: true },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
-  discount_percent: { type: Number, required: true }
+  hall_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Venue',
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
+    type: Date,
+    required: true
+  },
+  discount_percent: {
+    type: Number,
+    required: true
+  }
 });
+
 
 module.exports = mongoose.model('Offer', offerSchema);
 
@@ -118,7 +132,6 @@ const customerSupportSchema = new mongoose.Schema({
 module.exports = mongoose.model('CustomerSupport', customerSupportSchema);
 
 const wishlistSchema = new mongoose.Schema({
-  wishlist_id: { type: String, required: true, unique: true },
   user_id: { type: String, required: true },
   venue_id: { type: String, required: true },
   image: { type: String, required: true },
@@ -182,12 +195,3 @@ const HomepageContentSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('HomepageContent', HomepageContentSchema);
 
-const OfferSectionSchema = new mongoose.Schema({
-  image: { type: String, required: true },
-  venueName: { type: String, required: true },
-  ratings: { type: Number, required: true },
-  discount: { type: Number, required: true },
-  location: { type: String, required: true }
-});
-
-module.exports = mongoose.model('OfferSection', OfferSectionSchema);

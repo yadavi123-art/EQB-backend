@@ -84,6 +84,7 @@ router.post('/login', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Error logging in' });
   }
+console.log("Generated Token",token);
 });
 
 module.exports = router;

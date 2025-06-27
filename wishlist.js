@@ -76,7 +76,7 @@ const authMiddleware = require('./middleware/auth.js'); // Assuming you have an 
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { venue_id, image, venueName, ratings, location } = req.body;
-    const user_id = req.user.user_id; // Assuming authMiddleware adds user info to req
+    const user_id = req.user.userId; // Assuming authMiddleware adds user info to req
 
     const newWishlistItem = new Wishlist({
       user_id,

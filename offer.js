@@ -179,26 +179,34 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Update an offer by ID
 router.put('/:id', async (req, res) => {
   try {
-    const offer = await Offer.findById(req.params.id);
+    const offerId = req.params.id;
+    const { hall_id, startDate, endDate, discount_percent } = req.body;
+
+    // Check if offer exists
+    const offer = await Offer.findById(offerId);
     if (!offer) {
       return res.status(404).json({ message: 'Offer not found' });
     }
 
-    const { hall_id, startDate, endDate, discount_percent } = req.body;
+    // Optional: validate ObjectId before assigning
+    if (hall_id) offer.hall_id = hall_id;
+    if (startDate) offer.startDate = new Date(startDate);
+    if (endDate) offer.endDate = new Date(endDate);
+    if (discount_percent) offer.discount_percent = discount_percent;
 
-    offer.hall_id = hall_id || offer.hall_id;
-    offer.startDate = startDate || offer.startDate;
-    offer.endDate = endDate || offer.endDate;
-    offer.discount_percent = discount_percent || offer.discount_percent;
-
+    // Save updated offer
     await offer.save();
 
-    res.json({ message: 'Offer updated successfully' });
+    res.status(200).json({
+      message: 'Offer updated successfully',
+      offer
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
+    console.error('Update Offer Error:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
