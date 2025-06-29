@@ -109,9 +109,24 @@
  *         hall_type:
  *           type: string
  *           description: The type of hall.
+ *         location:
+ *           type: string
+ *           description: The location of the hall.
  *         priceperday:
  *           type: number
  *           description: The price per day.
+ *         capacity:
+ *           type: number
+ *           description: The capacity of the hall.
+ *         description:
+ *           type: string
+ *           description: A detailed description of the hall.
+ *         contactmail:
+ *           type: string
+ *           description: The contact email for the hall.
+ *         contact_phone:
+ *           type: string
+ *           description: The contact phone number for the hall.
  *         availabilty_status:
  *           type: boolean
  *           description: The availability status.
@@ -141,8 +156,13 @@
  *       required:
  *         - hall_name
  *         - hall_type
+ *         - location
  *         - priceperday
  *         - availabilty_status
+ *         - capacity
+ *         - description
+ *         - contactmail
+ *         - contact_phone
  *     Amenity:
  *       type: object
  *       properties:

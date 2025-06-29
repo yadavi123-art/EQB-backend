@@ -7,7 +7,9 @@ const userSchema = new mongoose.Schema({
   Email: { type: String, required: true, unique: true },
   phone_no: { type: String, required: true },
   password: { type: String, required: true },
-  review_count: { type: Number, default: 0 }
+  review_count: { type: Number, default: 0 },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 userSchema.pre('save', async function(next) {
@@ -37,9 +39,14 @@ const venueOwnerSchema = new mongoose.Schema({
 module.exports = mongoose.model('VenueOwner', venueOwnerSchema);
 
 const venueSchema = new mongoose.Schema({
-  hall_id: { type: String, required: true, unique: true },
+  hall_name: { type: String, required: true, unique: true },
   hall_type: { type: String, required: true },
+  location: { type: String, required: true },
   priceperday: { type: Number, required: true },
+  capacity: { type: Number },
+  description: { type: String },
+  contactmail: { type: String },
+  contact_phone: { type: String },
   availabilty_status: { type: Boolean, required: true },
   hall_amenities: [{ 
     ameniti_id: { type: String, required: true, unique: true },
@@ -194,4 +201,3 @@ const HomepageContentSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('HomepageContent', HomepageContentSchema);
-

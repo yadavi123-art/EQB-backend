@@ -3,7 +3,7 @@ const Venue = mongoose.model('Venue');
 
 async function getVenuesSortedByPrice() {
   try {
-    const venues = await Venue.find().sort({ priceperday: -1 });
+    const venues = await Venue.find().sort({ priceperday: 1 });
     return venues;
   } catch (error) {
     console.error(error);

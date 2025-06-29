@@ -20,9 +20,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({ msg: 'Invalid Hall ID' });
-    }
     const hall = await Venue.findById(req.params.id);
     if (!hall) {
       return res.status(404).json({ msg: 'Hall not found' });
@@ -38,8 +35,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newHall = new Venue({
-      hall_id: req.body.hall_id,
+      hall_name: req.body.hall_name,
       hall_type: req.body.hall_type,
+      location: req.body.location,
       priceperday: req.body.priceperday,
       availabilty_status: req.body.availabilty_status,
       hall_amenities: req.body.hall_amenities,

@@ -8,6 +8,7 @@ const db = require('./db.js'); // Import the database connection
 const User = require('./schema.js'); // Require the user schema
 const signupRoute = require('./signup.js');
 const loginRoute = require('./login.js');
+const forgotPasswordRoute = require('./forgotPassword.js');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger.js');
 
@@ -23,12 +24,26 @@ app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use('/auth', signupRoute);
 app.use('/auth', loginRoute);
+app.use('/auth', forgotPasswordRoute);
 app.use('/homepage', homepageRoute);
 app.use('/offers', offerRoute);
 app.use('/wishlist', wishlistRoute);
 
 const hallRoute = require('./hall.js');
 app.use('/halls', hallRoute);
+
+const { searchVenues } = require('./searchVenues.js');
+
+app.get('/venues/search', async (req, res) => {
+  try {
+    const { query, location } = req.query;
+    const venues = await searchVenues(query, location);
+    res.json(venues);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 // New route for popular venues
 /**
