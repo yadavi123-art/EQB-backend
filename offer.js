@@ -155,9 +155,10 @@ router.get('/', async (req, res) => {
   try {
     const offers = await Offer.find().populate('hall_id');
     const offerData = offers.map(offer => ({
-      image: offer.hall_id.image || "Image",
-      venueName: offer.hall_id.hall_type,
-      location: 'Sample Location', // Replace with actual location data if available
+      _id: offer._id,
+      image: offer.hall_id.images || "Image",
+      venueName: offer.hall_id.hall_name,
+      location: offer.hall_id.location,
       discount_percent: offer.discount_percent
     }));
     res.json(offerData);
