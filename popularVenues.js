@@ -8,20 +8,22 @@ const Venue = mongoose.model('Venue');
 
 async function getPopularVenues() {
   try {
-    const wishlistVenues = await Wishlist.find({ ratings: { $gt: 4 } });
-    const homepageVenues = await HomepageContent.find({ ratings: { $gt: 4 } });
-const offerVenues = await Offer.find({ ratings: { $gt: 4 } });
-    const reviewVenues = await Rating.find({ average_rating: { $gt: 4 } });
+    const filter = { $gt: 0 };
+    const reviewVenues = await Rating.find({ average_rating: filter }).lean();
+    const venuFilter = {
+      _id: {
+        $in: reviewVenues.map((ele) => (ele._id))
+      }
+    }
+    const venues = await Venue.find({ 
+      // venuFilter
+     });
 
     // Combine the results from all schemas
-let popularVenues = [...wishlistVenues, ...homepageVenues, ...offerVenues, ...reviewVenues];
+  let popularVenues = [...venues];
 
     if (popularVenues.length === 0) {
-      popularVenues = [{
-        venueName: 'Sample Venue',
-        ratings: 4.5,
-        location: 'Sample Location'
-      }];
+      popularVenues = [];
     }
 
     return popularVenues;
