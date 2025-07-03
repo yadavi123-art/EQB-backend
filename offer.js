@@ -180,6 +180,83 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /offers/venue/{venueId}:
+ *   get:
+ *     summary: Get all offers for a specific venue
+ *     tags: [Offer]
+ *     description: Returns a list of all offers created on a particular venue, including venue details.
+ *     parameters:
+ *       - in: path
+ *         name: venueId
+ *         required: true
+ *         description: ID of the venue to retrieve offers for
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the offer.
+ *                   image:
+ *                     type: string
+ *                     description: The URL of the venue image.
+ *                   venueName:
+ *                     type: string
+ *                     description: The name of the venue.
+ *                   location:
+ *                     type: string
+ *                     description: The location of the venue.
+ *                   discount_percent:
+ *                     type: number
+ *                     description: The discount percentage of the offer.
+ *                   startDate:
+ *                     type: string
+ *                     format: date
+ *                     description: The start date of the offer.
+ *                   endDate:
+ *                     type: string
+ *                     format: date
+ *                     description: The end date of the offer.
+ *       404:
+ *         description: No offers found for this venue
+ *       500:
+ *         description: Server error
+ */
+router.get('/venue/:venueId', async (req, res) => {
+  try {
+    const { venueId } = req.params;
+    const offers = await Offer.find({ hall_id: venueId }).populate('hall_id');
+
+    if (!offers || offers.length === 0) {
+      return res.status(404).json({ message: 'No offers found for this venue' });
+    }
+
+    const offerData = offers.map(offer => ({
+      _id: offer._id,
+      image: offer.hall_id.images && offer.hall_id.images.length > 0 ? offer.hall_id.images[0].url : "No Image Available",
+      venueName: offer.hall_id.hall_name,
+      location: offer.hall_id.location,
+      discount_percent: offer.discount_percent,
+      startDate: offer.startDate,
+      endDate: offer.endDate
+    }));
+    res.json(offerData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 // Update an offer by ID
 router.put('/:id', async (req, res) => {
   try {
