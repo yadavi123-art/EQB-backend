@@ -150,9 +150,6 @@
  *         averageRating:
  *           type: number
  *           description: The average rating of the hall.
- *         individualRatings:
- *           type: object
- *           description: The individual ratings of the hall.
  *       required:
  *         - hall_name
  *         - hall_type

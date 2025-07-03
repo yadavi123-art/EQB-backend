@@ -15,6 +15,9 @@ const swaggerSpecs = require('./swagger.js');
 const homepageRoute = require('./homepage.js');
 const offerRoute = require('./offer.js');
 const wishlistRoute = require('./wishlist.js');
+const ratingRoute = require('./rating.js');
+const availabilityRoute = require('./availability.js');
+const bookingRoute = require('./booking.js');
 
 
 
@@ -28,6 +31,9 @@ app.use('/auth', forgotPasswordRoute);
 app.use('/homepage', homepageRoute);
 app.use('/offers', offerRoute);
 app.use('/wishlist', wishlistRoute);
+app.use('/ratings', ratingRoute);
+app.use('/availability', availabilityRoute);
+app.use('/bookings', bookingRoute);
 
 const hallRoute = require('./hall.js');
 app.use('/halls', hallRoute);

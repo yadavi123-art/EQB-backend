@@ -42,8 +42,7 @@ router.post('/', async (req, res) => {
       availabilty_status: req.body.availabilty_status,
       hall_amenities: req.body.hall_amenities,
       images: req.body.images,
-      averageRating: req.body.averageRating,
-      individualRatings: req.body.individualRatings
+      averageRating: req.body.averageRating
     });
     const hall = await newHall.save();
     res.json(hall);
@@ -62,7 +61,6 @@ router.put('/:id', async (req, res) => {
     }
     
     hall.averageRating = req.body.averageRating || hall.averageRating;
-    hall.individualRatings = req.body.individualRatings || hall.individualRatings;
 
     const updatedHall = await hall.save();
     res.json(updatedHall);

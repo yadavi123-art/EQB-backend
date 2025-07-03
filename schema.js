@@ -62,16 +62,6 @@ const venueSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  individualRatings: {
-    type: Object,
-    default: {
-      "1": 0,
-      "2": 0,
-      "3": 0,
-      "4": 0,
-      "5": 0
-    }
-  }
 });
 
 module.exports = mongoose.model('Venue', venueSchema);

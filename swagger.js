@@ -23,7 +23,7 @@ const options = {
       },
     ],
   },
-  apis: ['./app.js', './signup.js', './login.js', './forgotPassword.js', './homepage.js', './offer.js', './wishlist.js', './hall.swagger.js', './search.swagger.js'], // Path to the API routes
+  apis: ['./app.js', './signup.js', './login.js', './forgotPassword.js', './homepage.js', './offer.js', './wishlist.js', './hall.swagger.js', './search.swagger.js', './rating.swagger.js', './availability.swagger.js', './booking.swagger.js'], // Path to the API routes
 };
 
 const specs = swaggerJsdoc(options);
