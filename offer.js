@@ -158,6 +158,7 @@ router.get('/', async (req, res) => {
       _id: offer._id,
       image: offer.hall_id.images || "Image",
       venueName: offer.hall_id.hall_name,
+      venue_id: offer.hall_id._id,
       location: offer.hall_id.location,
       discount_percent: offer.discount_percent
     }));
