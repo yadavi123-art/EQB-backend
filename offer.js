@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Offer = require('./schema.js').model('Offer');
 const Venue = require('./schema.js').model('Venue');
 
@@ -179,8 +180,16 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { hall_id, startDate, endDate, discount_percent } = req.body;
-    const newOffer = new Offer({ hall_id, startDate, endDate, discount_percent });
+    const { hall_id, startDate, endDate, discount_percent, description } = req.body;
+    if (!hall_id || !mongoose.Types.ObjectId.isValid(hall_id)) {
+      return res.status(400).json({ error: 'Invalid or missing hall_id (ObjectId expected)' });
+    }
+    const venueExists = await Venue.findById(hall_id);
+    if (!venueExists) {
+      return res.status(404).json({ error: 'Venue with given hall_id not found' });
+    }
+
+    const newOffer = new Offer({ hall_id, startDate, endDate, discount_percent, description });
     await newOffer.save();
     res.status(201).json({ message: 'Offer created successfully' });
   } catch (err) {
@@ -270,7 +279,7 @@ router.get('/venue/:venueId', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const offerId = req.params.id;
-    const { hall_id, startDate, endDate, discount_percent } = req.body;
+    const { hall_id, startDate, endDate, discount_percent, description } = req.body;
 
     // Check if offer exists
     const offer = await Offer.findById(offerId);
@@ -283,6 +292,7 @@ router.put('/:id', async (req, res) => {
     if (startDate) offer.startDate = new Date(startDate);
     if (endDate) offer.endDate = new Date(endDate);
     if (discount_percent) offer.discount_percent = discount_percent;
+    if (description) offer.description = description;
 
     // Save updated offer
     await offer.save();

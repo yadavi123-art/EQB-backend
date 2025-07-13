@@ -109,6 +109,9 @@ const offerSchema = new mongoose.Schema({
   discount_percent: {
     type: Number,
     required: true
+  },
+  description: {
+    type: String
   }
 });
 

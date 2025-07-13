@@ -24,7 +24,7 @@ const bookingRoute = require('./booking.js');
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { displayOperationId: true }));
 app.use('/auth', signupRoute);
 app.use('/auth', loginRoute);
 app.use('/auth', forgotPasswordRoute);

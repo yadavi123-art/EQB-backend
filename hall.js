@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Venue = mongoose.model('Venue'); // Assuming Venue model represents Halls
+const Offer = mongoose.model('Offer'); // Import the Offer model
 
 const router = express.Router();
 
@@ -24,7 +25,17 @@ router.get('/:id', async (req, res) => {
     if (!hall) {
       return res.status(404).json({ msg: 'Hall not found' });
     }
-    res.json(hall);
+
+    // Find offers related to this hall
+    const offers = await Offer.find({ hall_id: req.params.id });
+
+    // Combine hall data with offers
+    const hallWithOffers = {
+      ...hall.toObject(),
+      offers: offers.map(offer => offer.toObject())
+    };
+
+    res.json(hallWithOffers);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');

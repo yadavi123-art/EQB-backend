@@ -49,11 +49,18 @@
  *           type: string
  *     responses:
  *       200:
- *         description: Returns the hall.
+ *         description: Returns the hall with associated offers.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Hall'
+ *               allOf:
+ *                 - $ref: '#/components/schemas/Hall'
+ *                 - type: object
+ *                   properties:
+ *                     offers:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Offer'
  *       404:
  *         description: Hall not found.
  *   put:
@@ -160,6 +167,26 @@
  *         - description
  *         - contactmail
  *         - contact_phone
+ *     Offer:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The ID of the offer.
+ *         hall_id:
+ *           type: string
+ *           description: The ID of the venue the offer is for.
+ *         startDate:
+ *           type: string
+ *           format: date
+ *           description: The start date of the offer.
+ *         endDate:
+ *           type: string
+ *           format: date
+ *           description: The end date of the offer.
+ *         discount_percent:
+ *           type: number
+ *           description: The discount percentage of the offer.
  *     Amenity:
  *       type: object
  *       properties:

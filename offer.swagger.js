@@ -33,6 +33,9 @@
  *               discount_percent:
  *                 type: number
  *                 description: The discount percentage of the offer.
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the offer.
  *     responses:
  *       200:
  *         description: Successful operation
@@ -44,10 +47,31 @@
  *                 message:
  *                   type: string
  *                   description: A success message.
+ *                 offer:
+ *                   type: object
+ *                   properties:
+ *                     hall_id:
+ *                       type: string
+ *                       description: The ID of the venue.
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       description: The start date of the offer.
+ *                     endDate:
+ *                       type: string
+ *                       format: date
+ *                       description: The end date of the offer.
+ *                     discount_percent:
+ *                       type: number
+ *                       description: The discount percentage of the offer.
+ *                     description:
+ *                       type: string
+ *                       description: A brief description of the offer.
  *       404:
  *         description: Offer not found
  *       500:
  *         description: Server error
+ *
  *   delete:
  *     summary: Delete an existing offer
  *     tags: [Offer]
@@ -123,6 +147,9 @@
  *                     type: string
  *                     format: date
  *                     description: The end date of the offer.
+ *                   description:
+ *                     type: string
+ *                     description: A brief description of the offer.
  *       404:
  *         description: No offers found for this venue
  *       500:
@@ -161,50 +188,4 @@
  *                   location:
  *                     type: string
  *                     description: The location of the venue.
- *                   discount_percent:
- *                     type: number
- *                     description: The discount percentage of the offer.
- *                   averageRating:
- *                     type: number
- *                     description: The average rating of the venue.
- *       500:
- *         description: Server error
- *   post:
- *     summary: Create new offer
- *     tags: [Offer]
- *     description: Creates a new offer.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               hall_id:
- *                 type: string
- *                 description: The ID of the venue.
- *               startDate:
- *                 type: string
- *                 format: date
- *                 description: The start date of the offer.
- *               endDate:
- *                 type: string
- *                 format: date
- *                 description: The end date of the offer.
- *               discount_percent:
- *                 type: number
- *                 description: The discount percentage of the offer.
- *     responses:
- *       201:
- *         description: Successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: A success message.
- *       500:
- *         description: Server error
 */

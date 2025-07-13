@@ -29,6 +29,9 @@ router.post('/', async (req, res) => {
     const venue = await Venue.findById(hall_id);
     if (venue) {
       // Update individualRatings
+      if (!venue.individualRatings) {
+          venue.individualRatings = {};
+}
       venue.individualRatings[rating] = (venue.individualRatings[rating] || 0) + 1;
 
       // Recalculate averageRating
