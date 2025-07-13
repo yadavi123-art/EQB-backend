@@ -8,23 +8,9 @@ const Venue = mongoose.model('Venue');
 
 async function getPopularVenues() {
   try {
-    const filter = { $gt: 0 };
-    const reviewVenues = await Rating.find({ average_rating: filter }).lean();
-    const venuFilter = {
-      _id: {
-        $in: reviewVenues.map((ele) => (ele._id))
-      }
-    }
-    const venues = await Venue.find({ 
-      // venuFilter
-     });
-
-    // Combine the results from all schemas
-  let popularVenues = [...venues];
-
-    if (popularVenues.length === 0) {
-      popularVenues = [];
-    }
+    const popularVenues = await Venue.find()
+      .sort({ averageRating: -1 }) // Sort by averageRating in descending order
+      .limit(6); // Limit to 6 venues
 
     return popularVenues;
   } catch (error) {

@@ -56,12 +56,12 @@ app.get('/venues/search', async (req, res) => {
  * @swagger
  * /popularVenues:
  *   get:
- *     summary: Get popular venues
+ *     summary: Get top 6 popular venues with highest ratings
  *     tags: [Popular Venues]
- *     description: Returns a list of popular venues with ratings greater than 4.
+ *     description: Returns a list of the top 6 popular venues, sorted by their highest average rating.
  *     responses:
  *       200:
- *         description: A list of popular venues.
+ *         description: A list of the top 6 popular venues.
  */
 app.get('/popularVenues', async (req, res) => {
   try {

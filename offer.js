@@ -153,14 +153,22 @@ const Venue = require('./schema.js').model('Venue');
  */
 router.get('/', async (req, res) => {
   try {
-    const offers = await Offer.find().populate('hall_id');
+    const offers = await Offer.find()
+      .populate({
+        path: 'hall_id',
+        select: 'images hall_name location averageRating' // Select necessary fields including averageRating
+      })
+      .sort({ 'hall_id.averageRating': -1 }) // Sort by averageRating in descending order
+      .limit(6); // Limit to 6 offers
+
     const offerData = offers.map(offer => ({
       _id: offer._id,
-      image: offer.hall_id.images || "Image",
+      image: offer.hall_id.images && offer.hall_id.images.length > 0 ? offer.hall_id.images[0].url : "No Image Available",
       venueName: offer.hall_id.hall_name,
       venue_id: offer.hall_id._id,
       location: offer.hall_id.location,
-      discount_percent: offer.discount_percent
+      discount_percent: offer.discount_percent,
+      averageRating: offer.hall_id.averageRating // Include averageRating in the response
     }));
     res.json(offerData);
   } catch (err) {

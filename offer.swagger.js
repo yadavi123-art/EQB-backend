@@ -133,9 +133,9 @@
  * @swagger
  * /offers:
  *   get:
- *     summary: Get all offers with venue details
+ *     summary: Get top 6 offers with highest rated venue details
  *     tags: [Offer]
- *     description: Returns a list of all offers with venue details (image, name, location, discount).
+ *     description: Returns a list of the top 6 offers, sorted by the average rating of their associated venues in descending order. Includes venue details (image, name, location, discount, average rating).
  *     responses:
  *       200:
  *         description: Successful operation
@@ -146,20 +146,27 @@
  *               items:
  *                 type: object
  *                 properties:
- *                   hall_id:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the offer.
+ *                   image:
+ *                     type: string
+ *                     description: The URL of the venue image.
+ *                   venueName:
+ *                     type: string
+ *                     description: The name of the venue.
+ *                   venue_id:
  *                     type: string
  *                     description: The ID of the venue.
- *                   startDate:
+ *                   location:
  *                     type: string
- *                     format: date
- *                     description: The start date of the offer.
- *                   endDate:
- *                     type: string
- *                     format: date
- *                     description: The end date of the offer.
+ *                     description: The location of the venue.
  *                   discount_percent:
  *                     type: number
  *                     description: The discount percentage of the offer.
+ *                   averageRating:
+ *                     type: number
+ *                     description: The average rating of the venue.
  *       500:
  *         description: Server error
  *   post:
@@ -200,4 +207,4 @@
  *                   description: A success message.
  *       500:
  *         description: Server error
- */
+*/
