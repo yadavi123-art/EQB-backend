@@ -49,7 +49,7 @@
  *           type: string
  *     responses:
  *       200:
- *         description: Returns the hall with associated offers.
+ *         description: Returns the hall and its associated offers.
  *         content:
  *           application/json:
  *             schema:
@@ -61,6 +61,11 @@
  *                       type: array
  *                       items:
  *                         $ref: '#/components/schemas/Offer'
+ *                     individualRatings:
+ *                       type: object
+ *                       description: "Counts of individual ratings (e.g., { \"1\": 5, \"2\": 10 })."
+ *                       additionalProperties:
+ *                         type: number
  *       404:
  *         description: Hall not found.
  *   put:
@@ -157,6 +162,14 @@
  *         averageRating:
  *           type: number
  *           description: The average rating of the hall.
+ *         review:
+ *           type: string
+ *           description: User review for the hall.
+ *         individualRatings:
+ *           type: object
+ *           description: "Counts of individual ratings (e.g., { \"1\": 5, \"2\": 10 })."
+ *           additionalProperties:
+ *             type: number
  *       required:
  *         - hall_name
  *         - hall_type
@@ -202,4 +215,4 @@
  *         amenity_qnt:
  *           type: integer
  *           description: The amenity quantity.
- */
+*/

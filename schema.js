@@ -62,6 +62,8 @@ const venueSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  review: { type: String },
+  individualRatings: { type: Map, of: Number }
 });
 
 module.exports = mongoose.model('Venue', venueSchema);
@@ -152,7 +154,7 @@ module.exports = mongoose.model('Wishlist', wishlistSchema);
 const ratingSchema = new mongoose.Schema({
   hall_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Hall',
+    ref: 'Venue',
     required: true
   },
   user_phone: {
