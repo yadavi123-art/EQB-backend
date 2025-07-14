@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
         totalVotes += count;
       });
       venue.averageRating = totalVotes > 0 ? (totalRating / totalVotes) : 0;
+      venue.review = review; // Update the venue's review field with the latest review
 
       await venue.save();
     }
@@ -103,6 +104,7 @@ router.put('/:hall_id/:user_phone', async (req, res) => {
         totalVotes += count;
       });
       venue.averageRating = totalVotes > 0 ? (totalRating / totalVotes) : 0;
+      venue.review = review; // Update the venue's review field with the latest review
 
       await venue.save();
     }
