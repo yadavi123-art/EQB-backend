@@ -162,16 +162,31 @@ router.get('/', async (req, res) => {
       .sort({ 'hall_id.averageRating': -1 }) // Sort by averageRating in descending order
       .limit(6); // Limit to 6 offers
 
-    const offerData = offers.map(offer => ({
-      _id: offer._id,
-      image: offer.hall_id.images && offer.hall_id.images.length > 0 ? offer.hall_id.images[0].url : "No Image Available",
-      venueName: offer.hall_id.hall_name,
-      venue_id: offer.hall_id._id,
-      location: offer.hall_id.location,
-      discount_percent: offer.discount_percent,
-      averageRating: offer.hall_id.averageRating, // Include averageRating in the response
-      description: offer.description // Include description in the response
-    }));
+    const offerData = offers.map(offer => {
+      const venue = offer.hall_id;
+      if (!venue) {
+        return {
+          _id: offer._id,
+          image: "No Image Available",
+          venueName: "Venue Not Found",
+          venue_id: null,
+          location: "N/A",
+          discount_percent: offer.discount_percent,
+          averageRating: 0,
+          description: offer.description
+        };
+      }
+      return {
+        _id: offer._id,
+        image: venue.images && venue.images.length > 0 ? venue.images[0].url : "No Image Available",
+        venueName: venue.hall_name,
+        venue_id: venue._id,
+        location: venue.location,
+        discount_percent: offer.discount_percent,
+        averageRating: venue.averageRating,
+        description: offer.description
+      };
+    });
     res.json(offerData);
   } catch (err) {
     console.error(err);
@@ -260,16 +275,31 @@ router.get('/venue/:venueId', async (req, res) => {
       return res.status(404).json({ message: 'No offers found for this venue' });
     }
 
-    const offerData = offers.map(offer => ({
-      _id: offer._id,
-      image: offer.hall_id.images && offer.hall_id.images.length > 0 ? offer.hall_id.images[0].url : "No Image Available",
-      venueName: offer.hall_id.hall_name,
-      location: offer.hall_id.location,
-      discount_percent: offer.discount_percent,
-      startDate: offer.startDate,
-      endDate: offer.endDate,
-      description: offer.description // Include description in the response
-    }));
+    const offerData = offers.map(offer => {
+      const venue = offer.hall_id;
+      if (!venue) {
+        return {
+          _id: offer._id,
+          image: "No Image Available",
+          venueName: "Venue Not Found",
+          location: "N/A",
+          discount_percent: offer.discount_percent,
+          startDate: offer.startDate,
+          endDate: offer.endDate,
+          description: offer.description
+        };
+      }
+      return {
+        _id: offer._id,
+        image: venue.images && venue.images.length > 0 ? venue.images[0].url : "No Image Available",
+        venueName: venue.hall_name,
+        location: venue.location,
+        discount_percent: offer.discount_percent,
+        startDate: offer.startDate,
+        endDate: offer.endDate,
+        description: offer.description
+      };
+    });
     res.json(offerData);
   } catch (err) {
     console.error(err);
