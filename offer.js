@@ -169,7 +169,8 @@ router.get('/', async (req, res) => {
       venue_id: offer.hall_id._id,
       location: offer.hall_id.location,
       discount_percent: offer.discount_percent,
-      averageRating: offer.hall_id.averageRating // Include averageRating in the response
+      averageRating: offer.hall_id.averageRating, // Include averageRating in the response
+      description: offer.description // Include description in the response
     }));
     res.json(offerData);
   } catch (err) {
@@ -266,7 +267,8 @@ router.get('/venue/:venueId', async (req, res) => {
       location: offer.hall_id.location,
       discount_percent: offer.discount_percent,
       startDate: offer.startDate,
-      endDate: offer.endDate
+      endDate: offer.endDate,
+      description: offer.description // Include description in the response
     }));
     res.json(offerData);
   } catch (err) {
