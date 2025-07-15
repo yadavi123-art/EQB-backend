@@ -160,9 +160,9 @@
  * @swagger
  * /offers:
  *   get:
- *     summary: Get top 6 offers with highest rated venue details
+ *     summary: Get all offers with highest rated venue details
  *     tags: [Offer]
- *     description: Returns a list of the top 6 offers, sorted by the average rating of their associated venues in descending order. Includes venue details (image, name, location, discount, average rating).
+ *     description: Returns a list of all offers, sorted by the average rating of their associated venues in descending order. Includes venue details (image, name, location, discount, average rating).
  *     responses:
  *       200:
  *         description: Successful operation

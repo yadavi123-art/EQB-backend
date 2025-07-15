@@ -159,8 +159,7 @@ router.get('/', async (req, res) => {
         path: 'hall_id',
         select: 'images hall_name location averageRating' // Select necessary fields including averageRating
       })
-      .sort({ 'hall_id.averageRating': -1 }) // Sort by averageRating in descending order
-      .limit(6); // Limit to 6 offers
+      .sort({ 'hall_id.averageRating': -1 }); // Sort by averageRating in descending order
 
     const offerData = offers.map(offer => {
       const venue = offer.hall_id;
