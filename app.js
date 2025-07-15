@@ -18,7 +18,7 @@ const wishlistRoute = require('./wishlist.js');
 const ratingRoute = require('./rating.js');
 const availabilityRoute = require('./availability.js');
 const bookingRoute = require('./booking.js');
-
+const { searchVenuesByDateOrPrice } = require('./searchByDate.js');
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -34,6 +34,17 @@ app.use('/wishlist', wishlistRoute);
 app.use('/ratings', ratingRoute);
 app.use('/availability', availabilityRoute);
 app.use('/bookings', bookingRoute);
+
+app.get('/venues/searchByDate', async (req, res) => {
+  try {
+    const { date, price } = req.query;
+    const venues = await searchVenuesByDateOrPrice(date, price);
+    res.json(venues);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 const hallRoute = require('./hall.js');
 app.use('/halls', hallRoute);
