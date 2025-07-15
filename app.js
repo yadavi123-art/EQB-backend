@@ -68,9 +68,9 @@ app.get('/venues/search', async (req, res) => {
  * @swagger
  * /popularVenues:
  *   get:
- *     summary: Get top 6 popular venues with highest ratings
+ *     summary: Get top 6 popular venues with highest ratings for slider
  *     tags: [Popular Venues]
- *     description: Returns a list of the top 6 popular venues, sorted by their highest average rating.
+ *     description: Returns a list of the top 6 popular venues, sorted by their highest average rating. This endpoint is specifically for displaying popular venues in a slider.
  *     responses:
  *       200:
  *         description: A list of the top 6 popular venues.
