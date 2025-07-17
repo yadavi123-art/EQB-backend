@@ -136,6 +136,12 @@
  *     summary: Get all offers with venue details
  *     tags: [Offer]
  *     description: Returns a list of all offers with venue details (image, name, location, discount).
+ *     parameters:
+ *       - in: query
+ *         name: venue_id
+ *         schema:
+ *           type: string
+ *         description: ID of the venue to filter offers by. If not provided, all offers will be returned.
  *     responses:
  *       200:
  *         description: Successful operation

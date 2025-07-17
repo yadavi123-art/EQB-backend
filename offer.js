@@ -153,7 +153,14 @@ const Venue = require('./schema.js').model('Venue');
  */
 router.get('/', async (req, res) => {
   try {
-    const offers = await Offer.find().populate('hall_id');
+    const { venue_id } = req.query;
+    let query = {};
+
+    if (venue_id) {
+      query.hall_id = venue_id;
+    }
+
+    const offers = await Offer.find(query).populate('hall_id');
     const offerData = offers.map(offer => ({
       _id: offer._id,
       image: offer.hall_id.images || "Image",
