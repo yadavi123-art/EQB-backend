@@ -8,7 +8,19 @@ const router = express.Router();
 // POST a new booking
 router.post('/', async (req, res) => {
   try {
-    const { user_id, hall_id, booking_dates, status } = req.body;
+    const {
+      user_id,
+      hall_id,
+      booking_dates,
+      status,
+      purpose,
+      guest_quantity,
+      addons,
+      special_requests,
+      contact_name,
+      contact_email,
+      contact_phone
+    } = req.body;
 
     // Check if the venue is available for the requested dates
     for (let i = 0; i < booking_dates.length; i++) {
@@ -33,7 +45,14 @@ router.post('/', async (req, res) => {
       user_id,
       hall_id,
       booking_dates,
-      status
+      status,
+      purpose,
+      guest_quantity,
+      addons,
+      special_requests,
+      contact_name,
+      contact_email,
+      contact_phone
     });
 
     const savedBooking = await newBooking.save();

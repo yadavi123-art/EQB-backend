@@ -22,6 +22,11 @@
  *               - hall_id
  *               - booking_dates
  *               - status
+ *               - purpose
+ *               - guest_quantity
+ *               - contact_name
+ *               - contact_email
+ *               - contact_phone
  *             properties:
  *               user_id:
  *                 type: string
@@ -39,6 +44,29 @@
  *                 type: string
  *                 enum: [booked, canceled]
  *                 description: The status of the booking.
+ *               purpose:
+ *                 type: string
+ *                 description: The purpose of the booking.
+ *               guest_quantity:
+ *                 type: number
+ *                 description: The number of guests for the booking.
+ *               addons:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: A list of selected add-ons.
+ *               special_requests:
+ *                 type: string
+ *                 description: Any special requests for the booking.
+ *               contact_name:
+ *                 type: string
+ *                 description: The name of the contact person for the booking.
+ *               contact_email:
+ *                 type: string
+ *                 description: The email of the contact person for the booking.
+ *               contact_phone:
+ *                 type: string
+ *                 description: The phone number of the contact person for the booking.
  *     responses:
  *       201:
  *         description: Booking created successfully.
@@ -119,4 +147,27 @@
  *           type: string
  *           enum: [booked, canceled]
  *           description: The status of the booking.
+ *         purpose:
+ *           type: string
+ *           description: The purpose of the booking.
+ *         guest_quantity:
+ *           type: number
+ *           description: The number of guests for the booking.
+ *         addons:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: A list of selected add-ons.
+ *         special_requests:
+ *           type: string
+ *           description: Any special requests for the booking.
+ *         contact_name:
+ *           type: string
+ *           description: The name of the contact person for the booking.
+ *         contact_email:
+ *           type: string
+ *           description: The email of the contact person for the booking.
+ *         contact_phone:
+ *           type: string
+ *           description: The phone number of the contact person for the booking.
  */

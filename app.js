@@ -18,13 +18,14 @@ const wishlistRoute = require('./wishlist.js');
 const ratingRoute = require('./rating.js');
 const availabilityRoute = require('./availability.js');
 const bookingRoute = require('./booking.js');
-
+const { searchVenuesByDateOrPrice } = require('./searchByDate.js');
+const { getPopularOffers } = require('./popularOffers.js');
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { displayOperationId: true }));
 app.use('/auth', signupRoute);
 app.use('/auth', loginRoute);
 app.use('/auth', forgotPasswordRoute);
@@ -34,6 +35,17 @@ app.use('/wishlist', wishlistRoute);
 app.use('/ratings', ratingRoute);
 app.use('/availability', availabilityRoute);
 app.use('/bookings', bookingRoute);
+
+app.get('/venues/searchByDate', async (req, res) => {
+  try {
+    const { date, price } = req.query;
+    const venues = await searchVenuesByDateOrPrice(date, price);
+    res.json(venues);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 const hallRoute = require('./hall.js');
 app.use('/halls', hallRoute);
@@ -56,12 +68,12 @@ app.get('/venues/search', async (req, res) => {
  * @swagger
  * /popularVenues:
  *   get:
- *     summary: Get popular venues
+ *     summary: Get top 6 popular venues with highest ratings for slider
  *     tags: [Popular Venues]
- *     description: Returns a list of popular venues with ratings greater than 4.
+ *     description: Returns a list of the top 6 popular venues, sorted by their highest average rating. This endpoint is specifically for displaying popular venues in a slider.
  *     responses:
  *       200:
- *         description: A list of popular venues.
+ *         description: A list of the top 6 popular venues.
  */
 app.get('/popularVenues', async (req, res) => {
   try {
@@ -127,4 +139,58 @@ mongoose.connect('mongodb://127.0.0.1/EQBook')
  */
 app.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
+});
+
+/**
+ * @swagger
+ * /popularOffers:
+ *   get:
+ *     summary: Get top 6 offers with highest rated venue details for slider
+ *     tags: [Offer]
+ *     description: Returns a list of the top 6 offers, sorted by the average rating of their associated venues in descending order. This endpoint is specifically for displaying popular offers in a slider.
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the offer.
+ *                   image:
+ *                     type: string
+ *                     description: The URL of the venue image.
+ *                   venueName:
+ *                     type: string
+ *                     description: The name of the venue.
+ *                   venue_id:
+ *                     type: string
+ *                     description: The ID of the venue.
+ *                   location:
+ *                     type: string
+ *                     description: The location of the venue.
+ *                   discount_percent:
+ *                     type: number
+ *                     description: The discount percentage of the offer.
+ *                   averageRating:
+ *                     type: number
+ *                     description: The average rating of the venue.
+ *                   description:
+ *                     type: string
+ *                     description: A brief description of the offer.
+ *       500:
+ *         description: Server error
+ */
+app.get('/popularOffers', async (req, res) => {
+  try {
+    const popularOffers = await getPopularOffers();
+    res.json(popularOffers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });

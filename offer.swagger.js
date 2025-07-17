@@ -33,6 +33,9 @@
  *               discount_percent:
  *                 type: number
  *                 description: The discount percentage of the offer.
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the offer.
  *     responses:
  *       200:
  *         description: Successful operation
@@ -44,10 +47,31 @@
  *                 message:
  *                   type: string
  *                   description: A success message.
+ *                 offer:
+ *                   type: object
+ *                   properties:
+ *                     hall_id:
+ *                       type: string
+ *                       description: The ID of the venue.
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       description: The start date of the offer.
+ *                     endDate:
+ *                       type: string
+ *                       format: date
+ *                       description: The end date of the offer.
+ *                     discount_percent:
+ *                       type: number
+ *                       description: The discount percentage of the offer.
+ *                     description:
+ *                       type: string
+ *                       description: A brief description of the offer.
  *       404:
  *         description: Offer not found
  *       500:
  *         description: Server error
+ *
  *   delete:
  *     summary: Delete an existing offer
  *     tags: [Offer]
@@ -123,6 +147,9 @@
  *                     type: string
  *                     format: date
  *                     description: The end date of the offer.
+ *                   description:
+ *                     type: string
+ *                     description: A brief description of the offer.
  *       404:
  *         description: No offers found for this venue
  *       500:
@@ -133,15 +160,9 @@
  * @swagger
  * /offers:
  *   get:
- *     summary: Get all offers with venue details
+ *     summary: Get all offers with highest rated venue details
  *     tags: [Offer]
  *     description: Returns a list of all offers with venue details (image, name, location, discount).
- *     parameters:
- *       - in: query
- *         name: venue_id
- *         schema:
- *           type: string
- *         description: ID of the venue to filter offers by. If not provided, all offers will be returned.
  *     responses:
  *       200:
  *         description: Successful operation
@@ -152,20 +173,30 @@
  *               items:
  *                 type: object
  *                 properties:
- *                   hall_id:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the offer.
+ *                   image:
+ *                     type: string
+ *                     description: The URL of the venue image.
+ *                   venueName:
+ *                     type: string
+ *                     description: The name of the venue.
+ *                   venue_id:
  *                     type: string
  *                     description: The ID of the venue.
- *                   startDate:
+ *                   location:
  *                     type: string
- *                     format: date
- *                     description: The start date of the offer.
- *                   endDate:
- *                     type: string
- *                     format: date
- *                     description: The end date of the offer.
+ *                     description: The location of the venue.
  *                   discount_percent:
  *                     type: number
  *                     description: The discount percentage of the offer.
+ *                   averageRating:
+ *                     type: number
+ *                     description: The average rating of the venue.
+ *                   description:
+ *                     type: string
+ *                     description: A brief description of the offer.
  *       500:
  *         description: Server error
  *   post:
@@ -193,6 +224,9 @@
  *               discount_percent:
  *                 type: number
  *                 description: The discount percentage of the offer.
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the offer.
  *     responses:
  *       201:
  *         description: Successful operation
