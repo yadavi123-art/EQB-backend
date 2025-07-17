@@ -70,6 +70,8 @@ const authMiddleware = require('./middleware/auth.js'); // Assuming you have an 
  *               $ref: '#/components/schemas/Wishlist'
  *       401:
  *         description: Unauthorized - User not logged in
+ *       409:
+ *         description: Conflict - Venue already in wishlist
  *       500:
  *         description: Server error
  */
@@ -77,6 +79,13 @@ router.post('/', authMiddleware, async (req, res) => {
   try {
     const { venue_id, image, venueName, ratings, location } = req.body;
     const user_id = req.user.userId; // Assuming authMiddleware adds user info to req
+
+    // Check if the venue already exists in the user's wishlist
+    const existingWishlistItem = await Wishlist.findOne({ user_id, venue_id });
+
+    if (existingWishlistItem) {
+      return res.status(409).json({ message: 'Venue already in wishlist' });
+    }
 
     const newWishlistItem = new Wishlist({
       user_id,
