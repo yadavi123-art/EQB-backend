@@ -85,4 +85,18 @@ router.get('/hall/:hall_id', async (req, res) => {
   }
 });
 
+// GET a single booking by booking ID
+router.get('/:booking_id', async (req, res) => {
+  try {
+    const booking = await Booking.findOne({ booking_id: req.params.booking_id });
+    if (!booking) {
+      return res.status(404).json({ msg: 'Booking not found.' });
+    }
+    res.json(booking);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
