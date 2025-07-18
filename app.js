@@ -9,6 +9,8 @@ const User = require('./schema.js'); // Require the user schema
 const signupRoute = require('./signup.js');
 const loginRoute = require('./login.js');
 const forgotPasswordRoute = require('./forgotPassword.js');
+const adminRegisterRoute = require('./adminRegister.js');
+const adminLoginRoute = require('./adminLogin.js');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger.js');
 
@@ -20,6 +22,7 @@ const availabilityRoute = require('./availability.js');
 const bookingRoute = require('./booking.js');
 const { searchVenuesByDateOrPrice } = require('./searchByDate.js');
 const { getPopularOffers } = require('./popularOffers.js');
+const userManagementRoute = require('./userManagement.js');
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -29,12 +32,15 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs, { displayOpe
 app.use('/auth', signupRoute);
 app.use('/auth', loginRoute);
 app.use('/auth', forgotPasswordRoute);
+app.use('/auth', adminRegisterRoute);
+app.use('/auth', adminLoginRoute);
 app.use('/homepage', homepageRoute);
 app.use('/offers', offerRoute);
 app.use('/wishlist', wishlistRoute);
 app.use('/ratings', ratingRoute);
 app.use('/availability', availabilityRoute);
 app.use('/bookings', bookingRoute);
+app.use('/', userManagementRoute);
 
 app.get('/venues/searchByDate', async (req, res) => {
   try {

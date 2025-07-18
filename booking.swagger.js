@@ -122,6 +122,28 @@
  *                 $ref: '#/components/schemas/Booking'
  *       500:
  *         description: Server error.
+ * /bookings/{booking_id}:
+ *   get:
+ *     summary: Get a single booking by booking ID
+ *     tags: [Bookings]
+ *     parameters:
+ *       - in: path
+ *         name: booking_id
+ *         required: true
+ *         description: ID of the booking to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Returns a single booking object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Booking'
+ *       404:
+ *         description: Booking not found.
+ *       500:
+ *         description: Server error.
  *
  * components:
  *   schemas:
