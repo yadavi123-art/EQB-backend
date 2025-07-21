@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = 3000;
+require('dotenv').config(); // Load environment variables
 
 const db = require('./db.js'); // Import the database connection
 const User = require('./schema.js'); // Require the user schema

@@ -1,90 +1,49 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const User = require('./schema.js').model("User");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('./schema.js').model('User');
 
-/**
- * @swagger
- * /auth/login:
- *   tags: [Authentication]
- *   post:
- *     summary: Logging in
- *     tags: [Authentication]
- *     description: Logs in the user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               Email:
- *                 type: string
- *                 description: The email address of the user.
- *               password:
- *                 type: string
- *                 description: The password of the user.
- *     responses:
- *       200:
- *         description: Login successful
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: A success message.
- *       401:
- *         description: Invalid credentials
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: An error message.
- *       500:
- *         description: Error logging in
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: An error message.
- */
+// User Login
 router.post('/login', async (req, res) => {
-  try {
-    const { Email, password } = req.body;
+  const { identifier, password } = req.body; // identifier can be email or phone_no
 
-    // Find user by email
-    const user = await User.findOne({Email });
-    console.log("User",user,Email)
+  try {
+    // Find user by email or phone number
+    const user = await User.findOne({
+      $or: [{ Email: identifier }, { phone_no: identifier }]
+    });
+
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Check password
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-   
-   console.log("Password match result:", isMatch);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id, email: user.Email }, 'your-secret-key', { expiresIn: '1h' });
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
 
-    res.status(200).json({ message: 'Login successful', token });
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET, // Make sure JWT_SECRET is defined in your .env file
+      { expiresIn: '1h' },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ message: 'Login successfully'});
+      }
+    );
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error logging in' });
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
-console.log("Generated Token",token);
 });
 
 module.exports = router;
