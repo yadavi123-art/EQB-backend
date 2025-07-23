@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 router.post('/admin/register', async (req, res) => {
   try {
-    const { Name, phone_no, Email, password } = req.body;
+    const { Name, phone_no, Email, Password } = req.body; // Changed to Password
 
     // Check if admin with the given email already exists
     const existingAdmin = await Admin.findOne({ Email });
@@ -22,7 +22,7 @@ router.post('/admin/register', async (req, res) => {
       Name,
       phone_no, // Assuming phone_no is part of the Admin schema
       Email,
-      Password: password, // The pre-save hook in schema.js will hash this
+      Password, // Use the destructured Password directly
     });
 
     await newAdmin.save();
