@@ -46,7 +46,9 @@ const options = {
     './bookingReports.js',
     './inclusions.swagger.js', // New Swagger documentation for inclusions
     './destinationWedding.swagger.js', // New Swagger documentation for destination wedding
-    './destinationWeddingPage.swagger.js' // New Swagger documentation for destination wedding page
+    './destinationWeddingPage.swagger.js', // New Swagger documentation for destination wedding page
+    './venuesDestinationWedding.swagger.js', // New Swagger documentation for venues offering destination wedding
+    './venueAddons.swagger.js' // New Swagger documentation for venue add-ons
   ], // Path to the API routes
 };
 

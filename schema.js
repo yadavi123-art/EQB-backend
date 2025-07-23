@@ -76,6 +76,12 @@ const venueSchema = new mongoose.Schema({
     },
     price: { type: Number },
     inclusions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Inclusion' }]
+  }],
+  addons: [{
+    addon_name: { type: String, required: true },
+    description: { type: String },
+    price: { type: Number, required: true },
+    is_available: { type: Boolean, default: true }
   }]
 });
 

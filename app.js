@@ -31,6 +31,8 @@ const bookingReportsRoute = require('./bookingReports.js'); // New import
 const inclusionsRoute = require('./inclusions.js'); // New import
 const destinationWeddingRoute = require('./destinationWedding.js'); // New import
 const destinationWeddingPageRoutes = require('./destinationWeddingPageRoutes.js'); // New import
+const venuesDestinationWeddingRoutes = require('./venuesDestinationWedding.js'); // New import
+const venueAddonsRoutes = require('./venueAddons.js'); // New import
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
@@ -53,6 +55,8 @@ app.use('/reports', bookingReportsRoute); // New route for booking reports
 app.use('/inclusions', inclusionsRoute); // New route for inclusions
 app.use('/venues', destinationWeddingRoute); // New route for destination wedding
 app.use('/destinationWeddingPage', destinationWeddingPageRoutes); // New route for destination wedding page
+app.use('/venues', venuesDestinationWeddingRoutes); // New route for venues offering destination wedding
+app.use('/venues', venueAddonsRoutes); // New route for venue add-ons
 
 app.get('/venues/searchByDate', async (req, res) => {
   try {
