@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = 3000;
+require('dotenv').config(); // Load environment variables
 
 const db = require('./db.js'); // Import the database connection
 const User = require('./schema.js'); // Require the user schema
@@ -23,7 +24,8 @@ const bookingRoute = require('./booking.js');
 const { searchVenuesByDateOrPrice } = require('./searchByDate.js');
 const { getPopularOffers } = require('./popularOffers.js');
 const userManagementRoute = require('./userManagement.js');
-
+const userProfileRoute = require('./userProfile.js'); // New import
+const bookingReportsRoute = require('./bookingReports.js'); // New import
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
@@ -41,11 +43,13 @@ app.use('/ratings', ratingRoute);
 app.use('/availability', availabilityRoute);
 app.use('/bookings', bookingRoute);
 app.use('/', userManagementRoute);
+app.use('/user', userProfileRoute); // New route for user profile
+app.use('/reports', bookingReportsRoute); // New route for booking reports
 
 app.get('/venues/searchByDate', async (req, res) => {
   try {
-    const { date, price } = req.query;
-    const venues = await searchVenuesByDateOrPrice(date, price);
+    const { date, price, location } = req.query;
+    const venues = await searchVenuesByDateOrPrice(date, price, location);
     res.json(venues);
   } catch (error) {
     console.error(error);

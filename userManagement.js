@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./schema.js').model("User");
+const bcrypt = require('bcrypt');
 
 /**
  * @swagger
@@ -103,6 +104,10 @@ router.get('/users/:id', async (req, res) => {
  *                 format: email
  *               phone_no:
  *                 type: string
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: User's new password (optional)
  *     responses:
  *       200:
  *         description: User updated successfully
@@ -118,10 +123,17 @@ router.get('/users/:id', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { Name, Email, phone_no } = req.body;
+    const { Name, Email, phone_no, password } = req.body;
+    const updateFields = { Name, Email, phone_no };
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      updateFields.password = await bcrypt.hash(password, salt);
+    }
+
     const user = await User.findOneAndUpdate(
       { user_id: id },
-      { Name, Email, phone_no },
+      updateFields,
       { new: true, runValidators: true }
     );
     if (!user) {
