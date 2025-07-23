@@ -23,7 +23,31 @@ const options = {
       },
     ],
   },
-  apis: ['./app.js', './signup.js', './login.js', './login.swagger.js', './forgotPassword.js', './adminRegister.swagger.js', './adminLogin.swagger.js', './homepage.js', './offer.js', './offer.swagger.js', './wishlist.js', './hall.swagger.js', './search.swagger.js', './rating.swagger.js', './availability.swagger.js', './booking.swagger.js', './searchByDate.swagger.js', './userManagement.js', './userProfile.js', './bookingReports.js'], // Path to the API routes
+  apis: [
+    './app.js',
+    './signup.js',
+    './login.js',
+    './login.swagger.js',
+    './forgotPassword.js',
+    './adminRegister.swagger.js',
+    './adminLogin.swagger.js',
+    './homepage.js',
+    './offer.js',
+    './offer.swagger.js',
+    './wishlist.js',
+    './hall.swagger.js',
+    './search.swagger.js',
+    './rating.swagger.js',
+    './availability.swagger.js',
+    './booking.swagger.js',
+    './searchByDate.swagger.js',
+    './userManagement.js',
+    './userProfile.js',
+    './bookingReports.js',
+    './inclusions.swagger.js', // New Swagger documentation for inclusions
+    './destinationWedding.swagger.js', // New Swagger documentation for destination wedding
+    './destinationWeddingPage.swagger.js' // New Swagger documentation for destination wedding page
+  ], // Path to the API routes
 };
 
 const specs = swaggerJsdoc(options);

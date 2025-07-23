@@ -63,7 +63,20 @@ const venueSchema = new mongoose.Schema({
     default: 0
   },
   review: { type: String },
-  individualRatings: { type: Map, of: Number }
+  individualRatings: { type: Map, of: Number },
+  offers_destination_wedding: { type: Boolean, default: false },
+  destination_wedding_packages: [{
+    package_name: { type: String, required: true },
+    description: {
+      theme: { type: String },
+      duration: { type: String },
+      location_vibe: { type: String },
+      audience: { type: String },
+      style: { type: String }
+    },
+    price: { type: Number },
+    inclusions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Inclusion' }]
+  }]
 });
 
 module.exports = mongoose.model('Venue', venueSchema);
