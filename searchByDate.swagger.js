@@ -18,6 +18,12 @@
  *           type: number
  *         required: false
  *         description: The maximum price of the venue.
+ *       - in: query
+ *         name: location
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: The location of the venue to search for.
  *     responses:
  *       200:
  *         description: A list of venues available on the specified date or within the specified price range.

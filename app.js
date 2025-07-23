@@ -48,8 +48,8 @@ app.use('/reports', bookingReportsRoute); // New route for booking reports
 
 app.get('/venues/searchByDate', async (req, res) => {
   try {
-    const { date, price } = req.query;
-    const venues = await searchVenuesByDateOrPrice(date, price);
+    const { date, price, location } = req.query;
+    const venues = await searchVenuesByDateOrPrice(date, price, location);
     res.json(venues);
   } catch (error) {
     console.error(error);

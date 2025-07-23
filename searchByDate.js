@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Venue = mongoose.model('Venue');
 const Booking = mongoose.model('Booking');
 
-async function searchVenuesByDateOrPrice(date, price) {
+async function searchVenuesByDateOrPrice(date, price, location) {
   try {
     if (!date && !price) {
       throw new Error('At least one of date or price must be provided.');
@@ -36,6 +36,10 @@ async function searchVenuesByDateOrPrice(date, price) {
 
     if (price) {
       query.priceperday = { $lte: price };
+    }
+
+    if (location) {
+      query.location = { $regex: new RegExp(location, 'i') };
     }
 
     const availableVenues = await Venue.find(query);
