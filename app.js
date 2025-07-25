@@ -8,7 +8,6 @@ require('dotenv').config(); // Load environment variables
 const db = require('./db.js'); // Import the database connection
 const User = require('./schema.js'); // Require the user schema
 require('./inclusion.js'); // Require the inclusion schema
-require('./destinationWeddingPage.js'); // Require the destination wedding page schema
 const signupRoute = require('./signup.js');
 const loginRoute = require('./login.js');
 const forgotPasswordRoute = require('./forgotPassword.js');
@@ -29,9 +28,6 @@ const userManagementRoute = require('./userManagement.js');
 const userProfileRoute = require('./userProfile.js'); // New import
 const bookingReportsRoute = require('./bookingReports.js'); // New import
 const inclusionsRoute = require('./inclusions.js'); // New import
-const destinationWeddingRoute = require('./destinationWedding.js'); // New import
-const destinationWeddingPageRoutes = require('./destinationWeddingPageRoutes.js'); // New import
-const venuesDestinationWeddingRoutes = require('./venuesDestinationWedding.js'); // New import
 const venueAddonsRoutes = require('./venueAddons.js'); // New import
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -53,9 +49,6 @@ app.use('/', userManagementRoute);
 app.use('/user', userProfileRoute); // New route for user profile
 app.use('/reports', bookingReportsRoute); // New route for booking reports
 app.use('/inclusions', inclusionsRoute); // New route for inclusions
-app.use('/venues', destinationWeddingRoute); // New route for destination wedding
-app.use('/destinationWeddingPage', destinationWeddingPageRoutes); // New route for destination wedding page
-app.use('/venues', venuesDestinationWeddingRoutes); // New route for venues offering destination wedding
 app.use('/venues', venueAddonsRoutes); // New route for venue add-ons
 
 app.get('/venues/searchByDate', async (req, res) => {
