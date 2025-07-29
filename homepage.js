@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const HomepageContent = require('./schema.js').model('HomepageContent');
+const { HomepageContent } = require('./schema.js');
 const offerRouter = require('./offer.js');
 
 // Function to sanitize input data

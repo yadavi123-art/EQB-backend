@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Wishlist = require('./schema.js').model('Wishlist');
+const { Wishlist } = require('./schema.js');
 const authMiddleware = require('./middleware/auth.js'); // Assuming you have an auth middleware
 
 /**

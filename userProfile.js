@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const User = require('./schema.js').model('User');
+const { User } = require('./schema.js');
 const auth = require('./middleware/auth.js'); // Assuming auth middleware is in middleware/auth.js
 
 /**

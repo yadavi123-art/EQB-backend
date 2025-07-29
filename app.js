@@ -6,7 +6,7 @@ const port = 3000;
 require('dotenv').config(); // Load environment variables
 
 const db = require('./db.js'); // Import the database connection
-const User = require('./schema.js'); // Require the user schema
+const { User } = require('./schema.js'); // Require the user schema
 require('./inclusion.js'); // Require the inclusion schema
 const signupRoute = require('./signup.js');
 const loginRoute = require('./login.js');
