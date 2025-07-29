@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('./schema.js').model('User');
+const authService = require('./services/authService');
 
 // User Login
 router.post('/login', async (req, res) => {
@@ -18,29 +17,16 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Compare passwords
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Compare passwords using auth service
+    const isMatch = await authService.verifyPassword(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Generate JWT token
-    const payload = {
-      user: {
-        id: user.id,
-        email: user.Email
-      }
-    };
-
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET, // Make sure JWT_SECRET is defined in your .env file
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ message: 'Login successfully', token});
-      }
-    );
+    // Generate JWT token using auth service
+    const token = authService.generateToken(user);
+    res.json({ message: 'Login successfully', token });
+    
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
