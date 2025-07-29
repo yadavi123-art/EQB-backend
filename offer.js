@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Offer = require('./schema.js').model('Offer');
-const Venue = require('./schema.js').model('Venue');
+const { Offer, Venue } = require('./schema.js');
 
 /**
  * @swagger

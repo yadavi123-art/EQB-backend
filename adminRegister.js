@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('./schema.js').model("Admin"); // Assuming Admin schema is defined in schema.js
+const { Admin } = require('./schema.js'); // Admin schema is defined in schema.js
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const User = require('./schema.js').model("User"); // Assuming your User model is exported from schema.js
+const { User } = require('./schema.js'); // User model is exported from schema.js
 
 // Load environment variables from .env file
 require('dotenv').config();
