@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const mongoDB = 'mongodb://127.0.0.1/EQBook'; // Replace with your actual MongoDB connection string
+const mongoDB = process.env.MONGODB_URI || 'mongodb://127.0.0.1/EQBook'; // Use env variable with fallback
 
-mongoose.connect(mongoDB)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => console.log('MongoDB connection error:', err));
+// Connect to MongoDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('MongoDB connected successfully');
+    return mongoose.connection;
+  } catch (err) {
+    console.log('MongoDB connection error:', err);
+    process.exit(1);
+  }
+};
 
-const db = mongoose.connection;
-
-module.exports = db;
+module.exports = {
+  connectDB,
+  connection: mongoose.connection
+};
