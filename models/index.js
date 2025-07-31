@@ -11,5 +11,6 @@ module.exports = {
   Rating: require('./Rating'),
   History: require('./History'),
   HomepageContent: require('./HomepageContent'),
-  HallAmenity: require('./HallAmenity')
+  HallAmenity: require('./HallAmenity'),
+  Inclusion: require('./Inclusion')
 };

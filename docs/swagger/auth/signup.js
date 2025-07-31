@@ -1,15 +1,8 @@
 /**
  * @swagger
- * tags:
- *   name: Authentication
- *   description: User authentication and authorization
- */
-
-/**
- * @swagger
- * /auth/login:
+ * /auth/signup:
  *   post:
- *     summary: User login with email or phone number
+ *     summary: Register a new user
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -18,31 +11,32 @@
  *           schema:
  *             type: object
  *             required:
- *               - identifier
+ *               - Name
+ *               - Email
+ *               - phone_no
  *               - password
  *             properties:
- *               identifier:
+ *               Name:
  *                 type: string
- *                 description: User's email or phone number
- *                 example: user@example.com or +1234567890
+ *                 description: User's full name
+ *                 example: John Doe
+ *               Email:
+ *                 type: string
+ *                 format: email
+ *                 description: User's email address
+ *                 example: user@example.com
+ *               phone_no:
+ *                 type: string
+ *                 description: User's phone number
+ *                 example: +1234567890
  *               password:
  *                 type: string
  *                 format: password
  *                 description: User's password
  *                 example: mysecretpassword
  *     responses:
- *       200:
- *         description: User logged in successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                   description: JWT authentication token
- *       400:
- *         description: Invalid credentials
+ *       201:
+ *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -50,7 +44,15 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Invalid credentials
+ *                   example: User created successfully
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error creating user
  */

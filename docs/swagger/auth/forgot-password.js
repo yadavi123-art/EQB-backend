@@ -1,8 +1,8 @@
 /**
  * @swagger
- * /auth/admin/login:
+ * /auth/forgot-password:
  *   post:
- *     summary: Log in an admin
+ *     summary: Request a password reset email
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -11,20 +11,16 @@
  *           schema:
  *             type: object
  *             required:
- *               - Email
- *               - password
+ *               - email
  *             properties:
- *               Email:
+ *               email:
  *                 type: string
  *                 format: email
- *                 description: The email of the admin.
- *               password:
- *                 type: string
- *                 format: password
- *                 description: The password for the admin account.
+ *                 description: User's registered email address
+ *                 example: user@example.com
  *     responses:
  *       200:
- *         description: Admin logged in successfully.
+ *         description: Password reset email sent
  *         content:
  *           application/json:
  *             schema:
@@ -32,12 +28,9 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Admin logged in successfully
- *                 admin_id:
- *                   type: string
- *                   description: The ID of the logged-in admin.
- *       400:
- *         description: Invalid credentials.
+ *                   example: Password reset email sent.
+ *       404:
+ *         description: User not found
  *         content:
  *           application/json:
  *             schema:
@@ -45,7 +38,15 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Invalid credentials.
+ *                   example: User with that email does not exist.
  *       500:
- *         description: Internal Server Error.
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error.
  */
