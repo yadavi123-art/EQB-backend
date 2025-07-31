@@ -6,7 +6,6 @@ require('dotenv').config(); // Load environment variables
 
 const { connectDB } = require('./db.js'); // Import the database connection function
 const { User } = require('./schema.js'); // Require the user schema
-require('./inclusion.js'); // Require the inclusion schema
 
 // Import route modules
 const authRoutes = require('./routes/auth');
