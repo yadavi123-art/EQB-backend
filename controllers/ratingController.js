@@ -1,12 +1,9 @@
-const express = require('express');
 const mongoose = require('mongoose');
 const Rating = mongoose.model('Rating');
 const Venue = mongoose.model('Venue');
 
-const router = express.Router();
-
-// POST a new rating for a hall
-router.post('/', async (req, res) => {
+// Create a new rating for a hall
+exports.createRating = async (req, res) => {
   try {
     const { hall_id, user_phone, rating, review } = req.body;
 
@@ -55,10 +52,10 @@ router.post('/', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
-});
+};
 
-// PUT (update) an existing rating for a hall
-router.put('/:hall_id/:user_phone', async (req, res) => {
+// Update an existing rating for a hall
+exports.updateRating = async (req, res) => {
   try {
     const { hall_id, user_phone } = req.params;
     const { rating, review } = req.body;
@@ -114,10 +111,10 @@ router.put('/:hall_id/:user_phone', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
-});
+};
 
-// GET all ratings for a specific hall
-router.get('/:hall_id', async (req, res) => {
+// Get all ratings for a specific hall
+exports.getRatingsByHall = async (req, res) => {
   try {
     const ratings = await Rating.find({ hall_id: req.params.hall_id });
     res.json(ratings);
@@ -125,6 +122,4 @@ router.get('/:hall_id', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
-});
-
-module.exports = router;
+};

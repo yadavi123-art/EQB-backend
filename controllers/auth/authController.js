@@ -1,54 +1,77 @@
-const express = require('express');
-const router = express.Router();
+const { User } = require('../../schema.js');
+const authService = require('../../services/authService');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const { User } = require('./schema.js'); // User model is exported from schema.js
-
-// Load environment variables from .env file
-require('dotenv').config();
+const { v4: uuidv4 } = require('uuid');
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE, // e.g., 'Gmail'
+  service: process.env.EMAIL_SERVICE,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
 
-/**
- * @swagger
- * /auth/forgot-password:
- *   post:
- *     summary: Request password reset
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *     responses:
- *       200:
- *         description: Password reset email sent
- *       404:
- *         description: User not found
- *       500:
- *         description: Internal server error
- */
-router.post('/forgot-password', async (req, res) => {
+// User Login
+exports.login = async (req, res) => {
+  const { identifier, password } = req.body; // identifier can be email or phone_no
+
+  try {
+    // Find user by email or phone number
+    const user = await User.findOne({
+      $or: [{ Email: identifier }, { phone_no: identifier }]
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Compare passwords using auth service
+    const isMatch = await authService.verifyPassword(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate JWT token using auth service
+    const token = authService.generateToken(user);
+    res.json({ message: 'Login successfully', token });
+    
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
+// User Signup
+exports.signup = async (req, res) => {
+  try {
+    const { Name, Email, phone_no, password } = req.body;
+    const user_id = uuidv4();
+
+    const newUser = new User({
+      user_id,
+      Name,
+      Email,
+      phone_no,
+      password
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error creating user' });
+  }
+};
+
+// Forgot Password
+exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ Email: email });
 
-    
     if (!user) {
       return res.status(404).json({ message: 'User with that email does not exist.' });
     }
@@ -82,41 +105,10 @@ router.post('/forgot-password', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error.' });
   }
-});
+};
 
-/**
- * @swagger
- * /auth/reset-password/{token}:
- *   post:
- *     summary: Reset password
- *     tags: [Authentication]
- *     parameters:
- *       - in: path
- *         name: token
- *         required: true
- *         schema:
- *           type: string
- *         description: The password reset token
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - password
- *             properties:
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: Password has been reset
- *       400:
- *         description: Password reset token is invalid or has expired
- *       500:
- *         description: Internal server error
- */
-router.post('/reset-password/:token', async (req, res) => {
+// Reset Password
+exports.resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
     const { password } = req.body;
@@ -144,6 +136,9 @@ router.post('/reset-password/:token', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error.' });
   }
-});
+};
 
-module.exports = router;
+// Logout
+exports.logout = (req, res) => {
+  res.status(200).json({ message: 'Logout successful' });
+};
