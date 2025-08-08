@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const mongoDB = process.env.MONGODB_URI || 'mongodb://127.0.0.1/EQBook'; // Use env variable with fallback
+const mongoDB = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27018/EQBook'; // Use env variable with fallback
 
 // Connect to MongoDB
 const connectDB = async () => {
