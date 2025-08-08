@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
 
     // Generate JWT token using auth service
     const token = authService.generateToken(user);
-    res.json({ message: 'Login successfully', token });
+    res.json({ message: 'Login successfully', token, user: user });
     
   } catch (err) {
     console.error(err.message);

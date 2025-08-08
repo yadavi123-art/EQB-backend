@@ -33,7 +33,7 @@ EQBook is a comprehensive venue booking system designed to connect users with ev
 
    ```javascript
    JWT_SECRET=your_jwt_secret
-   MONGODB_URI=mongodb://127.0.0.1/EQBook
+   MONGODB_URI=mongodb://127.0.0.1:27018/EQBook
    PORT=3000
    ```
 
