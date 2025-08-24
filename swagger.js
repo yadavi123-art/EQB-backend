@@ -24,10 +24,18 @@ const options = {
     ],
   },
   apis: [
-    './app.js',
-    './controllers/**/*.js',
-    './routes/**/*.js',
-    './docs/swagger/**/*.js', // This will include all Swagger files in the new structure
+    './docs/swagger/auth/**/*.js',
+    './docs/swagger/inclusions/**/*.js',
+    './docs/swagger/bookings/**/*.js',
+    './docs/swagger/venues/**/*.js',
+    './docs/swagger/users/**/*.js',
+    './docs/swagger/offers/**/*.js',
+    './docs/swagger/ratings/**/*.js',
+    './docs/swagger/homepage/**/*.js',
+    './docs/swagger/wishlist/**/*.js',
+    // './app.js',
+    // './controllers/**/*.js',
+    // './routes/**/*.js',
   ],
 };
 

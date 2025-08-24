@@ -168,3 +168,89 @@ exports.getBookedVenues = async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+// Check venue availability for multiple dates
+exports.checkBulkAvailability = async (req, res) => {
+  try {
+    const { hall_id, booking_dates } = req.body;
+
+    // Validate input
+    if (!hall_id || !booking_dates || !Array.isArray(booking_dates)) {
+      return res.status(400).json({ 
+        message: 'hall_id and booking_dates array are required' 
+      });
+    }
+
+    if (booking_dates.length === 0) {
+      return res.status(400).json({ 
+        message: 'booking_dates array cannot be empty' 
+      });
+    }
+
+    // Verify venue exists
+    const venue = await Venue.findById(hall_id);
+    if (!venue) {
+      return res.status(404).json({ 
+        message: 'Venue not found' 
+      });
+    }
+
+    const availability = [];
+    let allAvailable = true;
+
+    // Check each date
+    for (const dateString of booking_dates) {
+      const checkDate = new Date(dateString);
+      
+      // Validate date
+      if (isNaN(checkDate.getTime())) {
+        availability.push({
+          date: dateString,
+          available: false,
+          message: 'Invalid date format'
+        });
+        allAvailable = false;
+        continue;
+      }
+
+      // Check for existing bookings on this date
+      const existingBookings = await Booking.find({
+        hall_id: hall_id,
+        booking_dates: {
+          $elemMatch: {
+            $gte: new Date(checkDate.setHours(0, 0, 0, 0)),
+            $lt: new Date(checkDate.setHours(23, 59, 59, 999))
+          }
+        }
+      });
+
+      const isAvailable = existingBookings.length === 0;
+      
+      availability.push({
+        date: dateString,
+        available: isAvailable,
+        message: isAvailable ? 'Available' : 'Already booked'
+      });
+
+      if (!isAvailable) {
+        allAvailable = false;
+      }
+    }
+
+    res.status(200).json({
+      hall_id: hall_id,
+      venue_name: venue.hall_name,
+      availability: availability,
+      all_available: allAvailable,
+      total_dates_checked: booking_dates.length,
+      available_dates_count: availability.filter(a => a.available).length
+    });
+
+  } catch (err) {
+    console.error('Bulk availability check error:', err);
+    res.status(500).json({ 
+      message: 'Server error',
+      error: err.message 
+    });
+  }
+};

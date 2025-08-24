@@ -10,8 +10,7 @@ router.get('/', offerController.getAllOffers);
 // Create a new offer
 router.post('/', offerController.createOffer);
 
-// Get offers by venue ID
-router.get('/venue/:venueId', offerController.getOffersByVenue);
+// Note: Venue-specific offer endpoints moved to /venues routes
 
 // Update an offer
 router.put('/:id', offerController.updateOffer);

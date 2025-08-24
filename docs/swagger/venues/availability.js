@@ -1,33 +1,26 @@
 /**
  * @swagger
- * tags:
- *   name: Availability
- *   description: API to check venue availability
- */
-
-/**
- * @swagger
- * /availability/{hall_id}/{date}:
+ * /venues/{hall_id}/availability/{date}:
  *   get:
  *     summary: Check venue availability for a specific date
- *     tags: [Availability]
+ *     tags: [Venues]
  *     parameters:
  *       - in: path
  *         name: hall_id
  *         required: true
- *         description: ID of the hall to check availability for.
+ *         description: ID of the hall to check availability for
  *         schema:
  *           type: string
  *       - in: path
  *         name: date
  *         required: true
- *         description: Date to check availability (YYYY-MM-DD format).
+ *         description: Date to check availability for (YYYY-MM-DD format)
  *         schema:
  *           type: string
  *           format: date
  *     responses:
  *       200:
- *         description: Returns availability status.
+ *         description: Availability status retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -35,10 +28,12 @@
  *               properties:
  *                 available:
  *                   type: boolean
- *                   description: True if available, false if booked.
+ *                   description: Whether the venue is available on the specified date
  *                 message:
  *                   type: string
- *                   description: A descriptive message about availability.
+ *                   description: Additional information about the availability
+ *       404:
+ *         description: Hall not found
  *       500:
- *         description: Server error.
+ *         description: Server error
  */
