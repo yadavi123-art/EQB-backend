@@ -2,13 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ratingController = require('../controllers/ratingController');
 
-// Create a new rating for a hall
-router.post('/', ratingController.createRating);
-
-// Update an existing rating for a hall
-router.put('/:hall_id/:user_phone', ratingController.updateRating);
-
-// Get all ratings for a specific hall
-router.get('/:hall_id', ratingController.getRatingsByHall);
+// Note: All venue-specific rating endpoints have been moved to /venues routes
+// This file is kept for any future non-venue-specific rating functionality
 
 module.exports = router;

@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth.js');
 const wishlistController = require('../controllers/wishlistController');
-
-// Add venue to wishlist
-router.post('/', authMiddleware, wishlistController.addToWishlist);
+const authMiddleware = require('../middleware/auth');
 
 // Get user's wishlist
 router.get('/', authMiddleware, wishlistController.getUserWishlist);
 
-// Remove venue from wishlist
-router.delete('/:venue_id', authMiddleware, wishlistController.removeFromWishlist);
+// Note: Venue-specific wishlist endpoints (add/remove) moved to /venues routes
 
 module.exports = router;
